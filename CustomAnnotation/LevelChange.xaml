@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="CustomAnnotation.LevelChange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ColourSliderLibrary;assembly=ColourSliderLibrary"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="110" d:DesignWidth="1000">
+    <Grid>
+        <Button 
+            ToolTipService.InitialShowDelay="500" 
+            ToolTipService.ShowDuration="2000" 
+            ToolTipService.BetweenShowDelay="10000" 
+            ToolTip="Save Updated Values"  
+            Content="Save" FontSize="10" HorizontalAlignment="Left" Margin="929,72,0,0" VerticalAlignment="Top" Width="49" Click="UpdateChanges"/>
+        <Button
+            ToolTipService.InitialShowDelay="500" 
+            ToolTipService.ShowDuration="2000" 
+            ToolTipService.BetweenShowDelay="10000" 
+            ToolTip="Reset UnSaved Values"                      
+            Content="Reset" FontSize="10" HorizontalAlignment="Left" Margin="929,24,0,0" VerticalAlignment="Top" Width="49" Click="ResetChanges"/>
+        <!--<local:ColourSlider Name="s1" HorizontalAlignment="Left" Margin="-21,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90
+                                     
+                                     "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s2" HorizontalAlignment="Left" Margin="25,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s3" HorizontalAlignment="Left" Margin="78,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s4" HorizontalAlignment="Left" Margin="126,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s5" HorizontalAlignment="Left" Margin="172,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s6" HorizontalAlignment="Left" Margin="225,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s7" HorizontalAlignment="Left" Margin="275,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s8" HorizontalAlignment="Left" Margin="321,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s9" HorizontalAlignment="Left" Margin="374,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s10" HorizontalAlignment="Left" Margin="422,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s11" HorizontalAlignment="Left" Margin="468,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s12" HorizontalAlignment="Left" Margin="521,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s13" HorizontalAlignment="Left" Margin="570,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s14" HorizontalAlignment="Left" Margin="620,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s15" HorizontalAlignment="Left" Margin="666,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s16" HorizontalAlignment="Left" Margin="719,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s17" HorizontalAlignment="Left" Margin="767,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s18" HorizontalAlignment="Left" Margin="813,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s19" HorizontalAlignment="Left" Margin="866,44,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+        <local:ColourSlider Name="s20" HorizontalAlignment="Left" Margin="914,44,-15,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.5,0.5">
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90                                                                            "/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>-->
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,49 @@
+﻿<Window x:Class="CustomAnnotation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="" Height="1080" Width="1920"
+        WindowStyle="None" 
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF2C2C2C" KeyDown="Window_KeyDown">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto" MinWidth="1692"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="31*"/>
+            <RowDefinition Height="Auto" MinHeight="1007"/>
+            <RowDefinition Height="34*"/>
+        </Grid.RowDefinitions>
+
+        <Button ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Click to exit!" 
+                x:Name="Exit" 
+                Content="X" Margin="0,5,5,0" VerticalAlignment="Top" Click="Exit_Click" Height="25" Background="#FF343434" Foreground="Red" BorderBrush="#FFACACAC" FontWeight="Bold" HorizontalAlignment="Right" Width="22" Grid.Column="2"/>
+
+
+        <Grid x:Name="VideoPlayerHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="880" Width="1650" Margin="21,29,0,0" Grid.Row="1" Grid.Column="1"/>
+        <Grid x:Name="GamePadAnnotationHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="840" Width="75" Margin="1078,39,0,0"  Grid.Column="1" Grid.Row="1"/>
+        <Grid x:Name="LoggingDetailsHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="130" Width="324" Margin="1345,860,0,0"  Grid.Column="1" Grid.Row="1"/>
+        <Grid x:Name="LevelChangeHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="110" Width="1000" Margin="52,889,0,0"  Grid.Column="1" Grid.Row="1" Visibility="Visible"/>
+        <!--<Rectangle Width="1000" Height="110" Stroke="White" Grid.ColumnSpan="2" Grid.Column="1" Margin="1,790,0,0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+
+        <Label Content="?" Name="value" Grid.Column="1" Foreground="White" HorizontalAlignment="Left" Margin="1165,860,0,0" Grid.Row="1" VerticalAlignment="Top" Width="36" Height="25" Visibility="Hidden"/>
+        <Label Name="UserMessage" Content="(1) Open a Video, (2) Connect to the GamePad, (3) Setup Logging and then (4) Press Play!" Grid.Column="1" HorizontalAlignment="Left" Margin="22,5,0,0" VerticalAlignment="Top" Height="27" Width="617" Foreground="Red" FontSize="12" Grid.Row="1"/>
+        <Image  ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Gamepad Connection Status" 
+                Grid.Column="1" Name="GP_Status" Source="./images/UIX_01.png" HorizontalAlignment="Left" Height="32" Margin="1603,1,0,0" VerticalAlignment="Top" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" Grid.Row="1"/>
+        <Image  ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Media Loaded Status" 
+                Grid.Column="1" Name="Media_Status" Source="./images/UIX_02.png" HorizontalAlignment="Left" Height="32" Margin="1640,1,0,0" VerticalAlignment="Top" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" Grid.Row="1"/>
+
+    </Grid>
+</Window>

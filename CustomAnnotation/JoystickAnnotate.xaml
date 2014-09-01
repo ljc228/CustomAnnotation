@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="CustomAnnotation.JoystickAnnotate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ColourSliderLibrary;assembly=ColourSliderLibrary"
+             mc:Ignorable="d" 
+             Width="75" Height="840">
+
+    <Grid>
+
+        <Button ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Use Left Thumbstick"
+                x:Name="Left" Content="L" VerticalAlignment="Top" Click="Connect" Tag="L"  Height="25" Background="#FF343434" Foreground="Red" BorderBrush="#FFACACAC" FontWeight="Bold" HorizontalAlignment="Left" Width="22" Margin="11,805,0,0"/>
+        <Button ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Use Right Thumbstick"
+                x:Name="Right" Content="R" VerticalAlignment="Top" Click="Connect" Tag="R" Height="25" Background="#FF343434" Foreground="Red" BorderBrush="#FFACACAC" FontWeight="Bold" HorizontalAlignment="Left" Width="22" Margin="39,805,0,0"/>
+
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="10,70,0,0" Name="XInput" VerticalAlignment="Top" Width="69" Visibility="Hidden"/>
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="88,70,0,0" Name="YInput" VerticalAlignment="Top" Width="69" Visibility="Hidden" />
+
+        <local:ColourSlider ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Measurement Slider"
+                Name="EngagementSlider" Margin="-365,373,-362,0" Height="60" VerticalAlignment="Top" Minimum="-10000" Maximum="10000" Foreground="Black" BorderBrush="White" RenderTransformOrigin="0.5,0.5" >
+            
+            <local:ColourSlider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:ColourSlider.RenderTransform>
+        </local:ColourSlider>
+
+        <Label Name="GamePadStatus" Content="Not Currently Connected to GamePad Device.." Margin="0,98,174,0" VerticalAlignment="Top" Width="454" Foreground="White" HorizontalAlignment="Right"/>
+        <!--<Button Name="ConnectGamePad" Content="Connect" Height="23" Margin="-105,761,128,0" VerticalAlignment="Top" Click="Connect" HorizontalAlignment="Right" Width="52" />-->
+    </Grid>
+</UserControl>

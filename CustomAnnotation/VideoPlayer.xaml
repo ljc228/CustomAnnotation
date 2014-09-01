@@ -1,0 +1,171 @@
+﻿<UserControl x:Class="CustomAnnotation.VideoPlayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mk="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
+             mc:Ignorable="d" d:DesignWidth="1660" Height="880">
+
+
+    <UserControl.Resources>
+
+        <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="IsTabStop" Value="false" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border  BorderThickness="1" BorderBrush="Black" Background="Black" Height="3"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border SnapsToDevicePixels="True" Background="Green"  BorderThickness="1" BorderBrush="YellowGreen" Height="3"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderThumb" TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Ellipse Height="10" Width="10" Fill="Green"></Ellipse>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="Slider"  TargetType="Slider">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Track Grid.Row="1" x:Name="PART_Track"   >
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton1}"  Command="Slider.DecreaseLarge" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource SliderThumb}"  />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton}" Command="Slider.IncreaseLarge" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+        </ControlTemplate>
+
+        <Style x:Key="Horizontal_Slider" TargetType="Slider">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="MinHeight" Value="21" />
+                    <Setter Property="MinWidth" Value="104" />
+                    <Setter Property="Template" Value="{StaticResource Slider}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Rectangle x:Name="CameraViewsBox" Fill="#FF343434" HorizontalAlignment="Left" Width="1056"  Stroke="White" StrokeThickness="6" Margin="1,13,0,0" Height="795" VerticalAlignment="Top" />
+        <Rectangle x:Name="CameraViewsBox3" Fill="#FF343434" HorizontalAlignment="Left" Width="518"  Stroke="White" StrokeThickness="6" Margin="1130,416,0,0" Height="392" VerticalAlignment="Top" />
+        <Rectangle x:Name="CameraViewsBox2" Fill="#FF343434" HorizontalAlignment="Left" Width="518"  Stroke="White" StrokeThickness="6" Margin="1130,13,0,0" Height="392" VerticalAlignment="Top" />
+
+        <mk:MediaUriElement LoadedBehavior="Manual" x:Name="bgvideo"  Width="1045" Height="786" Source="" Margin="7,18,0,0" HorizontalAlignment="Left" MediaOpened="MediaOpened" VerticalAlignment="Top"/>
+        <mk:MediaUriElement LoadedBehavior="Manual" x:Name="bgvideo1" Width="510" Height="400" Source="" Margin="1134,18,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <mk:MediaUriElement LoadedBehavior="Manual" x:Name="bgvideo2" Width="510" Height="400" Source="" Margin="1134,421,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+
+
+        <Grid x:Name="VideoControlsGrid" Margin="23,19,619,799" >
+
+            <DockPanel Name="VideoControls" MouseEnter="VideoControls_MouseEnter" MouseLeave="VideoControls_MouseLeave" Background="Transparent">
+                <!-- Play button. -->
+                <Image Name="PlayButton" 
+                       ToolTipService.InitialShowDelay="500" 
+                        ToolTipService.ShowDuration="2000" 
+                        ToolTipService.BetweenShowDelay="10000" 
+                        ToolTip="Play Video (F5)"
+                        Source="images/UI_01.png" Width="64" Height="64" MouseDown="OnMouseDownPlayMedia" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
+                
+                <!-- Pause button.-->
+                <Image Name="PauseButton"
+                       ToolTipService.InitialShowDelay="500" 
+                        ToolTipService.ShowDuration="2000" 
+                        ToolTipService.BetweenShowDelay="10000" 
+                        ToolTip="Pause Video (F6)"
+                        Source="images/UI_02.png" Width="64" Height="64" MouseDown="OnMouseDownPauseMedia"  HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
+                
+                <!-- Stop button. -->
+                <Image Name="StopButton" 
+                        ToolTipService.InitialShowDelay="500" 
+                        ToolTipService.ShowDuration="2000" 
+                        ToolTipService.BetweenShowDelay="10000" 
+                        ToolTip="Stop Video (F7)"
+                       Source="images/UI_03.png" Width="64" Height="64" MouseDown="OnMouseDownStopMedia" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
+                
+                <!-- Open media. -->
+                <Image Name ="OpenButton"
+                       ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Open Media (F8)"
+                
+                       Source="images/UI_04.png" Width="64" Height="64" HorizontalAlignment="Left" MouseDown="OpenVideo" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
+
+                <Slider ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Volume Control"
+                
+                        x:Name="volumeSlider" ValueChanged="ChangeMediaVolume" Minimum="0" Maximum="6" Value="3" Margin="99,30,0,13" Width="146" HorizontalAlignment="Right" DockPanel.Dock="Right" />
+
+            </DockPanel>
+
+        </Grid>
+
+
+
+        <Label Content="Volume" HorizontalAlignment="Left" Margin="522,-186,0,0" Foreground="White" VerticalAlignment="Top"/>
+        <Label Content="00:00:00" Name="VideoTime" HorizontalAlignment="Left" Margin="1229,902,0,-48" VerticalAlignment="Top" Width="88" Foreground="White"/>
+        <Label Content="00:00:00" Name="VideoTime1" HorizontalAlignment="Left" Margin="1229,915,0,-61" VerticalAlignment="Top" Width="88" Foreground="White"/>
+        <Label Content="00:00:00" Name="VideoTime2" HorizontalAlignment="Left" Margin="1229,928,0,-74" VerticalAlignment="Top" Width="88" Foreground="White"/>
+
+
+
+
+        <Slider Style="{StaticResource Horizontal_Slider}" Name="SeekBar" HorizontalAlignment="Left" Margin="7,818,0,0" VerticalAlignment="Top" Width="1039"  Height="25"/><!--Thumb.DragStarted="seekBar_DragStarted" 
+                        Thumb.DragCompleted="seekBar_DragCompleted"-->
+
+
+        <Label Name="VideoPos" Content="00:00:00" HorizontalAlignment="Left" Margin="1,830,0,0" VerticalAlignment="Top" Foreground="White" Height="31" Width="65"/>
+        <Label Name="VideoLength" Content="00:00:00" HorizontalAlignment="Left" Margin="998,830,0,0" VerticalAlignment="Top" Foreground="White" Height="31" Width="54"/>
+        <Label Content="Frontal:" x:Name="VideoTime_Copy" HorizontalAlignment="Left" Margin="1145,902,0,-48" VerticalAlignment="Top" Width="60" Foreground="White" FontWeight="Bold"/>
+        <Label Content="Lateral:" x:Name="VideoTime1_Copy" HorizontalAlignment="Left" Margin="1145,915,0,-61" VerticalAlignment="Top" Width="60" Foreground="White" FontWeight="Bold"/>
+        <Label Content="Arial:" x:Name="VideoTime2_Copy" HorizontalAlignment="Left" Margin="1145,928,0,-74" VerticalAlignment="Top" Width="60" Foreground="White" FontWeight="Bold"/>
+        <Label Content="Camera Timing" x:Name="VideoTime1_Copy1" HorizontalAlignment="Left" Margin="1163,884,0,-30" VerticalAlignment="Top" Width="100" Foreground="White" FontWeight="ExtraBold"/>
+        <Image Name="Replay" 
+               ToolTipService.InitialShowDelay="500" 
+                ToolTipService.ShowDuration="2000" 
+                ToolTipService.BetweenShowDelay="10000" 
+                ToolTip="Restart this Media:  !! Export Log First !!"
+               HorizontalAlignment="Left" Source="/images/replay.png" Height="256" Margin="395,301,0,0" VerticalAlignment="Top" Width="256" Visibility="Hidden" MouseDown="Replay_MouseDown"/>
+    </Grid>
+</UserControl>
