@@ -150,7 +150,7 @@ namespace CustomAnnotation
                         mGamepad.Properties.SetRange(
                             ParameterHow.ById,
                             doi.ObjectId,
-                            new InputRange(-10000, 10000));
+                            new InputRange(-1000, 1000));
                     }
 
                 }

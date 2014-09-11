@@ -13,9 +13,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="31*"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="Auto" MinHeight="1007"/>
-            <RowDefinition Height="34*"/>
+            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
 
         <Button ToolTipService.InitialShowDelay="500" 
@@ -23,13 +23,14 @@
                 ToolTipService.BetweenShowDelay="10000" 
                 ToolTip="Click to exit!" 
                 x:Name="Exit" 
-                Content="X" Margin="0,5,5,0" VerticalAlignment="Top" Click="Exit_Click" Height="25" Background="#FF343434" Foreground="Red" BorderBrush="#FFACACAC" FontWeight="Bold" HorizontalAlignment="Right" Width="22" Grid.Column="2"/>
+                Content="X" Margin="0,5,10,0" VerticalAlignment="Top" Click="Exit_Click" Height="25" Background="#FF343434" Foreground="Red" BorderBrush="#FFACACAC" FontWeight="Bold" HorizontalAlignment="Right" Width="22" Grid.Column="2" Grid.Row="1"/>
 
 
         <Grid x:Name="VideoPlayerHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="880" Width="1650" Margin="21,29,0,0" Grid.Row="1" Grid.Column="1"/>
+        <Grid x:Name="ObjectiveCriteriaHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="1056" Grid.Row="1" Grid.Column="1" Margin="21,860,0,0"/>
         <Grid x:Name="GamePadAnnotationHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="840" Width="75" Margin="1078,39,0,0"  Grid.Column="1" Grid.Row="1"/>
-        <Grid x:Name="LoggingDetailsHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="130" Width="324" Margin="1345,860,0,0"  Grid.Column="1" Grid.Row="1"/>
-        <Grid x:Name="LevelChangeHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="110" Width="1000" Margin="52,889,0,0"  Grid.Column="1" Grid.Row="1" Visibility="Visible"/>
+        <Grid x:Name="LoggingDetailsHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="130" Width="324" Margin="1343,900,0,-6"  Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
+        <Grid x:Name="LevelChangeHolder" HorizontalAlignment="Left" VerticalAlignment="Top" Height="110" Width="1000" Margin="50,929,0,-15"  Grid.Column="1" Grid.Row="1" Visibility="Visible" Grid.RowSpan="2"/>
         <!--<Rectangle Width="1000" Height="110" Stroke="White" Grid.ColumnSpan="2" Grid.Column="1" Margin="1,790,0,0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
 
         <Label Content="?" Name="value" Grid.Column="1" Foreground="White" HorizontalAlignment="Left" Margin="1165,860,0,0" Grid.Row="1" VerticalAlignment="Top" Width="36" Height="25" Visibility="Hidden"/>

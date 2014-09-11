@@ -25,7 +25,10 @@ namespace CustomAnnotation
     public enum STATE
     {
         NONE,
+        MEDIACHANGE,
+        MEDIALOADING,
         MEDIALOADED,
+        RESTARTED,
         READY,
         PLAYING,
         PAUSED,
@@ -50,13 +53,13 @@ namespace CustomAnnotation
             
             InitializeComponent();
             mVideoSeektimer = new DispatcherTimer();
-            mVideoSeektimer.Interval = TimeSpan.FromMilliseconds(250);
+            mVideoSeektimer.Interval = TimeSpan.FromMilliseconds(10);
             mVideoSeektimer.Tick += new EventHandler(VideoSeekTimerTick);
 
 
-            mInitStartTimer = new DispatcherTimer();
-            mInitStartTimer.Interval = TimeSpan.FromMilliseconds(350);
-            mInitStartTimer.Tick += new EventHandler(InitStartTimerTick);
+            //mInitStartTimer = new DispatcherTimer();
+            //mInitStartTimer.Interval = TimeSpan.FromMilliseconds(350);
+            //mInitStartTimer.Tick += new EventHandler(InitStartTimerTick);
 
             State = STATE.NONE;
 
@@ -87,15 +90,15 @@ namespace CustomAnnotation
             }
 
 
-            VideoTime.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss");
-            VideoTime1.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss");
-            VideoTime2.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss");
+            VideoTime.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
+            VideoTime1.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
+            VideoTime2.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
 
         }
 
         public TimeSpan GetVideoPosition()
         {
-            return TimeSpan.FromTicks(bgvideo.MediaPosition);// Position;
+            return TimeSpan.FromTicks(bgvideo.MediaPosition);
         }
 
         // Play the media. 
@@ -152,8 +155,40 @@ namespace CustomAnnotation
                 bgvideo1.Play();
                 bgvideo2.Play();
 
-                mInitStartTimer.Start();
+                //mInitStartTimer.Start();
             }
+        }
+
+        // Stop the media. 
+        private void OnMouseDownRestartMedia(object sender, MouseButtonEventArgs args)
+        {
+            if (State == STATE.PLAYING || State == STATE.PAUSED || State == STATE.ENDED)
+            {
+                bgvideo.Stop();
+                bgvideo1.Stop();
+                bgvideo2.Stop();
+
+                bgvideo.MediaPosition = 0;
+                bgvideo1.MediaPosition = 0;
+                bgvideo2.MediaPosition = 0;
+
+                State = STATE.RESTARTED;
+            }
+        }
+
+        // Stop the media. 
+        private void OnMouseDownOpenMedia(object sender, MouseButtonEventArgs args)
+        {
+            
+            bgvideo.Stop();
+            bgvideo1.Stop();
+            bgvideo2.Stop();
+
+            bgvideo.MediaPosition = 0;
+            bgvideo1.MediaPosition = 0;
+            bgvideo2.MediaPosition = 0;
+
+            State = STATE.MEDIACHANGE;
         }
 
         public void Play()
@@ -173,7 +208,12 @@ namespace CustomAnnotation
 
         public void Open()
         {
-            OpenVideo(null, null);
+            OnMouseDownOpenMedia(null, null);
+        }
+
+        public bool ChangeMedia()
+        {
+            return OpenVideo(null, null);
         }
 
 
@@ -189,8 +229,9 @@ namespace CustomAnnotation
             bgvideo.Volume = (int)volumeSlider.Value;
         }
 
-        private void OpenVideo(object sender, RoutedEventArgs e)
+        private bool OpenVideo(object sender, RoutedEventArgs e)
         {
+            State = STATE.MEDIALOADING;
             // Create OpenFileDialog 
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
@@ -224,30 +265,18 @@ namespace CustomAnnotation
                 bgvideo2.Source = new Uri(fl + "\\" + video3);
 
                 bgvideo.Volume = 0;
-                bgvideo1.Volume = 0;// IsMuted = true;
-                bgvideo2.Volume = 0;// .IsMuted = true;
+                bgvideo1.Volume = 0;
+                bgvideo2.Volume = 0;
 
-                bgvideo.Play();
-                bgvideo1.Play();
-                bgvideo2.Play();
-
+                return true;
+            }
+            else
+            {
                 State = STATE.NONE;
-                mInitStartTimer.Start();
+                return false;
             }
         }
 
-        void InitStartTimerTick(object sender, EventArgs e)
-        {
-            bgvideo.Stop();
-            bgvideo1.Stop();
-            bgvideo2.Stop();
-
-            bgvideo.MediaPosition = 0;
-            bgvideo1.MediaPosition = 0;
-            bgvideo2.MediaPosition = 0;
-
-            mInitStartTimer.Stop();
-        }
 
         private void MediaOpened(object sender, RoutedEventArgs e)
         {
@@ -281,7 +310,7 @@ namespace CustomAnnotation
         {
             PlayButton.Visibility = Visibility.Visible;
             PauseButton.Visibility = Visibility.Visible;
-            StopButton.Visibility = Visibility.Visible;
+            RestartButton.Visibility = Visibility.Visible;
             OpenButton.Visibility = Visibility.Visible;
             volumeSlider.Visibility = Visibility.Visible;
 
@@ -291,7 +320,7 @@ namespace CustomAnnotation
         {
             PlayButton.Visibility = Visibility.Hidden;
             PauseButton.Visibility = Visibility.Hidden;
-            StopButton.Visibility = Visibility.Hidden;
+            RestartButton.Visibility = Visibility.Hidden;
             OpenButton.Visibility = Visibility.Hidden;
             volumeSlider.Visibility = Visibility.Hidden;
         }

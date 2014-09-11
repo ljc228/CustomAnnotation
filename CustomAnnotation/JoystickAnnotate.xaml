@@ -21,14 +21,14 @@
                 x:Name="Right" Content="R" VerticalAlignment="Top" Click="Connect" Tag="R" Height="25" Background="#FF343434" Foreground="Red" BorderBrush="#FFACACAC" FontWeight="Bold" HorizontalAlignment="Left" Width="22" Margin="39,805,0,0"/>
 
         <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="10,70,0,0" Name="XInput" VerticalAlignment="Top" Width="69" Visibility="Hidden"/>
-        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="88,70,0,0" Name="YInput" VerticalAlignment="Top" Width="69" Visibility="Hidden" />
+        
 
         <local:ColourSlider ToolTipService.InitialShowDelay="500" 
                 ToolTipService.ShowDuration="2000" 
                 ToolTipService.BetweenShowDelay="10000" 
                 ToolTip="Measurement Slider"
-                Name="EngagementSlider" Margin="-365,373,-362,0" Height="60" VerticalAlignment="Top" Minimum="-10000" Maximum="10000" Foreground="Black" BorderBrush="White" RenderTransformOrigin="0.5,0.5" >
-            
+                Name="EngagementSlider" Margin="-365,373,-362,0" Height="60" VerticalAlignment="Top" Minimum="-1000" Maximum="1000" Foreground="Black" BorderBrush="White" RenderTransformOrigin="0.5,0.5" >
+
             <local:ColourSlider.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -38,7 +38,7 @@
                 </TransformGroup>
             </local:ColourSlider.RenderTransform>
         </local:ColourSlider>
-
+<Label Content="0" Height="28" HorizontalAlignment="Left" Margin="20,367,0,0" Name="YInput" VerticalAlignment="Top" Width="28" Visibility="Hidden" />
         <Label Name="GamePadStatus" Content="Not Currently Connected to GamePad Device.." Margin="0,98,174,0" VerticalAlignment="Top" Width="454" Foreground="White" HorizontalAlignment="Right"/>
         <!--<Button Name="ConnectGamePad" Content="Connect" Height="23" Margin="-105,761,128,0" VerticalAlignment="Top" Click="Connect" HorizontalAlignment="Right" Width="52" />-->
     </Grid>

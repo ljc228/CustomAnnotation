@@ -17,35 +17,56 @@ using System.IO;
 
 namespace CustomAnnotation
 {
+    public enum LOGGINGSTATE
+    {
+        NONE,
+        LOGGING,
+        PAUSED,
+        POPULATED,
+        EXPORTED
+    }
 
     public partial class Logging : UserControl
     {
-        private bool mLoggingStatus;
+
+        LOGGINGSTATE mLoggingState { get; set; }
+        
+        //private bool mLoggingStatus;
         public string mFilename { get; set; }
+        public string mObjectiveCriteria { get; set; }
+        public string mCoderName { get; set; }
         
         public List<Log> mLogList = new List<Log>();
 
-        public Logging(Grid placeholder)
+        public Logging(Grid placeholder, string objectiveCriteria, string coderName)
         {
             placeholder.Children.Add(this); 
-            InitializeComponent(); 
+            InitializeComponent();
+            mObjectiveCriteria = objectiveCriteria;
+            mCoderName = coderName;
+
+            mLoggingState = LOGGINGSTATE.NONE;
             
         }
 
-        public bool LoggingStatus
+        public LOGGINGSTATE GetLoggingState()
         {
-            get
-            {
-                return mLoggingStatus;
-            }
-            set
-            {
-                mLoggingStatus = value;
-                if (value == false)
-                    lstatus.Content = "Idle...";
-                else
-                    lstatus.Content = "Logging...";
-            }
+            return mLoggingState;
+        }
+        public void SetLoggingState(LOGGINGSTATE ls)
+        {
+            mLoggingState = ls;
+
+            if (ls == LOGGINGSTATE.NONE)
+                lstatus.Content = "Idle...";
+            else if (ls == LOGGINGSTATE.LOGGING)
+                lstatus.Content = "Logging...";
+            else if (ls == LOGGINGSTATE.PAUSED)
+                lstatus.Content = "Logging has been Paused...";
+            else if (ls == LOGGINGSTATE.POPULATED)
+                lstatus.Content = "Log needs to be exported...";
+            else if (ls == LOGGINGSTATE.EXPORTED)
+                lstatus.Content = "Logfile has been exported...";
         }
 
         public void SetFileName(string fn)
@@ -59,6 +80,11 @@ namespace CustomAnnotation
             mLogList.Add(log);
         }
 
+        public void Reset()
+        {
+            Clear();
+        }
+
         public void Clear()
         {
             mLogList.Clear();
@@ -66,21 +92,26 @@ namespace CustomAnnotation
 
         private void ExportLog(object sender, RoutedEventArgs e)
         {
-            if (mLoggingStatus == true)
+            if (GetLoggingState() == LOGGINGSTATE.LOGGING)
                 return;
             
-            string[] lines = new string[mLogList.Count];
+            string[] lines = new string[mLogList.Count+1];
+
+            lines[0] = string.Format("{0}", mObjectiveCriteria);
 
             for (int i = 0; i < mLogList.Count; i++)
             {
-                lines[i] = string.Format("{0},{1}", mLogList[i].Time, mLogList[i].LogValue);
+                string t = DateTime.Now.ToString("hh:mm:ss:fff");
+                lines[i + 1] = string.Format("{0},{1:0.00}", mLogList[i].Time, mLogList[i].LogValue /*, mLogList[i].mLogIndex, mLogList[i].mDebugIndex*/);
             }
 
             try
             {
-                System.IO.Directory.CreateDirectory("C:\\WOZAnnotationLogs");
-                string fname = NextAvailableFilename("C:\\WOZAnnotationLogs\\" + Filename.Text + ".txt");
+                System.IO.Directory.CreateDirectory("C:\\WOZAnnotationLogs\\"+ mCoderName);
+                string fname = NextAvailableFilename("C:\\WOZAnnotationLogs\\" + mCoderName + "\\" + Filename.Text + ".txt");
                 System.IO.File.WriteAllLines(@fname, lines);
+
+                SetLoggingState(LOGGINGSTATE.EXPORTED);
             }
             catch (Exception exception)
             {

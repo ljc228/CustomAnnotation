@@ -114,12 +114,21 @@
                         Source="images/UI_02.png" Width="64" Height="64" MouseDown="OnMouseDownPauseMedia"  HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
                 
                 <!-- Stop button. -->
-                <Image Name="StopButton" 
+                <!--<Image Name="StopButton" 
                         ToolTipService.InitialShowDelay="500" 
                         ToolTipService.ShowDuration="2000" 
                         ToolTipService.BetweenShowDelay="10000" 
                         ToolTip="Stop Video (F7)"
-                       Source="images/UI_03.png" Width="64" Height="64" MouseDown="OnMouseDownStopMedia" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
+                       Source="images/UI_03.png" Width="64" Height="64" MouseDown="OnMouseDownStopMedia" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>-->
+
+                <!-- Restart button. -->
+                <Image Name="RestartButton" 
+                        ToolTipService.InitialShowDelay="500" 
+                        ToolTipService.ShowDuration="2000" 
+                        ToolTipService.BetweenShowDelay="10000" 
+                        ToolTip="Restart Video (F7)"
+                       Source="images/UI_05.png" Width="64" Height="64" MouseDown="OnMouseDownRestartMedia" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
+
                 
                 <!-- Open media. -->
                 <Image Name ="OpenButton"
@@ -128,7 +137,7 @@
                 ToolTipService.BetweenShowDelay="10000" 
                 ToolTip="Open Media (F8)"
                 
-                       Source="images/UI_04.png" Width="64" Height="64" HorizontalAlignment="Left" MouseDown="OpenVideo" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
+                       Source="images/UI_04.png" Width="64" Height="64" HorizontalAlignment="Left" MouseDown="OnMouseDownOpenMedia" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"/>
 
                 <Slider ToolTipService.InitialShowDelay="500" 
                 ToolTipService.ShowDuration="2000" 
