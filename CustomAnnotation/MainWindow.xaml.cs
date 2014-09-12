@@ -175,6 +175,7 @@ namespace CustomAnnotation{
                     System.TimeSpan diff1 = DateTime.Now.Subtract(mPauseTime);
                     mAccumulatedVoidTime += diff1;
                     mLocalState = LOCALSTATE.PLAYING;
+                    UserMessage.Content = "Playing Media...";
                 }
 
                 if (mLocalState == LOCALSTATE.READYTOPLAY)
