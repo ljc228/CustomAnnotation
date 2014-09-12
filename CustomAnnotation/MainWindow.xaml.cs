@@ -100,7 +100,8 @@ namespace CustomAnnotation{
             {
                 Log log = new Log();
                 log.Time = diff2.ToString(@"hh\:mm\:ss\:fff", System.Globalization.CultureInfo.InvariantCulture);
-                //log.Time = DateTime.Today.Add(mVideoPlayer.GetVideoPosition()).ToString("HH:mm:ss:fff");
+                log.mVideoTime = DateTime.Today.Add(mVideoPlayer.GetVideoPosition()).ToString("HH:mm:ss:fff");
+                log.mVideoTimeShort = DateTime.Today.Add(mVideoPlayer.GetVideoPosition()).ToString("HH:mm:ss");
                 log.LogValue = Math.Round(mJoystickAnnotate.GetValue() / 1000, 2);
                 log.mLogIndex = debugIndex % 5;
                 log.mDebugIndex = debugIndex;
@@ -128,8 +129,16 @@ namespace CustomAnnotation{
 
             if (mVideoPlayer.State == STATE.ENDED)
             {
-                mLogging.SetLoggingState(LOGGINGSTATE.POPULATED);
-                UserMessage.Content = "Media Playback has ended -  Export Log!!";
+                if (mLogging.GetLoggingState() != LOGGINGSTATE.POPULATED && mLogging.GetLoggingState() != LOGGINGSTATE.EXPORTED)
+                {
+                    if (mPausableLoggingTimer.Enabled == true)
+                        mPausableLoggingTimer.Enabled = false; 
+                
+                    mLogging.SetLoggingState(LOGGINGSTATE.POPULATED);
+                    mLogging.ExportLog(null, null);
+                    UserMessage.Content = "Media Playback has ended -  Log has been automatically exported!!";
+                }
+
                 return;
             }
             else if (mVideoPlayer.State == STATE.NONE)
@@ -150,6 +159,7 @@ namespace CustomAnnotation{
                 {
                     mLocalState = LOCALSTATE.PLAYING;
                     UserMessage.Content = "Playing Media...";
+                    ResetPrimaryItems();
                     startTime = DateTime.Now;
                     mPausableLoggingTimer.Start();     
                 }
@@ -287,6 +297,11 @@ namespace CustomAnnotation{
             }           
         }
 
+        private void ResetPrimaryItems()
+        {
+            mAccumulatedVoidTime = TimeSpan.Zero;
+        }
+
 
 
 
@@ -308,7 +323,7 @@ namespace CustomAnnotation{
             }
             else if (e.Key == System.Windows.Input.Key.F7)
             {
-                mVideoPlayer.Stop();
+                mVideoPlayer.Restart();
             }
             else if (e.Key == System.Windows.Input.Key.F8)
             {

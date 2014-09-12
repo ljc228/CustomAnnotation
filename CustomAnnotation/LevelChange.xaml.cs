@@ -114,7 +114,7 @@ namespace CustomAnnotation
                 if (position >= 0)
                 {
                     sliders[i].Value = mLogList[position].LogValue;
-                    mLabels[i].Content = mLogList[position].Time;
+                    mLabels[i].Content = mLogList[position].mVideoTimeShort;
                     position--;
                 }
                 else
@@ -133,7 +133,7 @@ namespace CustomAnnotation
             {
                 if (position >= 0)
                 {
-                    mLogList[position].LogValue = sliders[i].Value;
+                    mLogList[position-1].LogValue = sliders[i].Value;
                     position--;
                 }
                 else

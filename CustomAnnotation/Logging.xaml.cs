@@ -90,19 +90,21 @@ namespace CustomAnnotation
             mLogList.Clear();
         }
 
-        private void ExportLog(object sender, RoutedEventArgs e)
+        public void ExportLog(object sender, RoutedEventArgs e)
         {
             if (GetLoggingState() == LOGGINGSTATE.LOGGING)
                 return;
             
-            string[] lines = new string[mLogList.Count+1];
+            string[] lines = new string[mLogList.Count+3];
 
-            lines[0] = string.Format("{0}", mObjectiveCriteria);
+            lines[0] = string.Format("Coder_Name = {0}", mCoderName); 
+            lines[1] = string.Format("Objective_Criteria = {0}", mObjectiveCriteria);
+            lines[2] = string.Format("{0}\t{1}\t{2}","App_Timer", "Annotation_Value", "Video_Time");
 
             for (int i = 0; i < mLogList.Count; i++)
             {
                 string t = DateTime.Now.ToString("hh:mm:ss:fff");
-                lines[i + 1] = string.Format("{0},{1:0.00}", mLogList[i].Time, mLogList[i].LogValue /*, mLogList[i].mLogIndex, mLogList[i].mDebugIndex*/);
+                lines[i + 3] = string.Format("{0}\t{1:0.00}\t{2}", mLogList[i].Time, mLogList[i].LogValue, mLogList[i].mVideoTime);
             }
 
             try

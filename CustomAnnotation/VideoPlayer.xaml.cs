@@ -39,7 +39,6 @@ namespace CustomAnnotation
     public partial class VideoPlayer : UserControl
     {
         DispatcherTimer mVideoSeektimer;
-        DispatcherTimer mInitStartTimer;
         public string mFilename {get; set;}
         public STATE State { get; set; }
         private bool IsDragging { get; set; }
@@ -56,43 +55,44 @@ namespace CustomAnnotation
             mVideoSeektimer.Interval = TimeSpan.FromMilliseconds(10);
             mVideoSeektimer.Tick += new EventHandler(VideoSeekTimerTick);
 
-
-            //mInitStartTimer = new DispatcherTimer();
-            //mInitStartTimer.Interval = TimeSpan.FromMilliseconds(350);
-            //mInitStartTimer.Tick += new EventHandler(InitStartTimerTick);
-
             State = STATE.NONE;
 
         }
 
         void VideoSeekTimerTick(object sender, EventArgs e)
         {
+            TimeSpan ts = new TimeSpan(0, 0, 0, 1, 0);
 
-            if (GetVideoPosition() == TimeSpan.FromTicks(bgvideo.MediaDuration))
+            if (GetVideoPosition() > TimeSpan.FromTicks(bgvideo.MediaDuration).Subtract(ts) && State != STATE.ENDED)
             {
+                Pause();
                 State = STATE.ENDED;
-                Replay.Visibility = Visibility.Visible;
-            }
-
-            
-            if (!IsDragging)
-            {
-                SeekBar.Value = TimeSpan.FromTicks(bgvideo.MediaPosition).TotalSeconds;
-                mCurrentposition = SeekBar.Value;
                 
-                TimeSpan time = TimeSpan.FromSeconds(mCurrentposition);
-                VideoPos.Content = DateTime.Today.Add(time).ToString("HH:mm:ss");
+                Replay.Visibility = Visibility.Visible;
+                return;
             }
-            else
+            else if (State != STATE.ENDED)
             {
-                TimeSpan time = TimeSpan.FromSeconds(SeekBar.Value);
-                VideoPos.Content = DateTime.Today.Add(time).ToString("HH:mm:ss");
+
+                if (!IsDragging)
+                {
+                    SeekBar.Value = TimeSpan.FromTicks(bgvideo.MediaPosition).TotalSeconds;
+                    mCurrentposition = SeekBar.Value;
+
+                    TimeSpan time = TimeSpan.FromSeconds(mCurrentposition);
+                    VideoPos.Content = DateTime.Today.Add(time).ToString("HH:mm:ss");
+                }
+                else
+                {
+                    TimeSpan time = TimeSpan.FromSeconds(SeekBar.Value);
+                    VideoPos.Content = DateTime.Today.Add(time).ToString("HH:mm:ss");
+                }
+
+
+                VideoTime.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
+                VideoTime1.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
+                VideoTime2.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
             }
-
-
-            VideoTime.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
-            VideoTime1.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
-            VideoTime2.Content = DateTime.Today.Add(TimeSpan.FromTicks(bgvideo.MediaPosition)).ToString("HH:mm:ss:fff");
 
         }
 
@@ -104,8 +104,16 @@ namespace CustomAnnotation
         // Play the media. 
         private void OnMouseDownPlayMedia(object sender, MouseButtonEventArgs args)
         {
-            if (State == STATE.READY || State == STATE.PAUSED || State == STATE.STOPPED)
+            if (State == STATE.READY || State == STATE.PAUSED || State == STATE.RESTARTED)
             {
+
+                if (State != STATE.PAUSED)
+                {
+                    bgvideo.MediaPosition = 0;
+                    bgvideo1.MediaPosition = 0;
+                    bgvideo2.MediaPosition = 0;
+                }
+
                 bgvideo.Volume = 3; 
                 bgvideo1.Volume = 0;// IsMuted = true;
                 bgvideo2.Volume = 0;// .IsMuted = true;
@@ -115,13 +123,15 @@ namespace CustomAnnotation
                 bgvideo2.Play();
 
                 State = STATE.PLAYING;
+
+                if(Replay.Visibility == Visibility.Visible)
+                    Replay.Visibility = Visibility.Hidden;
             }
         }
 
         // Pause the media. 
         private void OnMouseDownPauseMedia(object sender, MouseButtonEventArgs args)
         {
-
             if (State == STATE.PLAYING)
             {
                 bgvideo.Pause();
@@ -132,33 +142,7 @@ namespace CustomAnnotation
             }
         }
 
-        // Stop the media. 
-        private void OnMouseDownStopMedia(object sender, MouseButtonEventArgs args)
-        {
-            if (State == STATE.PLAYING || State == STATE.PAUSED || State == STATE.ENDED)
-            {
-                bgvideo.Stop();
-                bgvideo1.Stop();
-                bgvideo2.Stop();
-
-                bgvideo.MediaPosition = 0;
-                bgvideo1.MediaPosition = 0;
-                bgvideo2.MediaPosition = 0;
-
-                State = STATE.STOPPED;
-                
-                bgvideo.Volume = 0;
-                bgvideo1.Volume = 0;
-                bgvideo2.Volume = 0;
-
-                bgvideo.Play();
-                bgvideo1.Play();
-                bgvideo2.Play();
-
-                //mInitStartTimer.Start();
-            }
-        }
-
+        
         // Stop the media. 
         private void OnMouseDownRestartMedia(object sender, MouseButtonEventArgs args)
         {
@@ -201,14 +185,14 @@ namespace CustomAnnotation
             OnMouseDownPauseMedia(null, null);
         }
 
-        public void Stop()
-        {
-            OnMouseDownStopMedia(null, null);
-        }
-
         public void Open()
         {
             OnMouseDownOpenMedia(null, null);
+        }
+
+        public void Restart()
+        {
+            OnMouseDownRestartMedia(null, null);
         }
 
         public bool ChangeMedia()
@@ -328,7 +312,7 @@ namespace CustomAnnotation
         private void Replay_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Replay.Visibility = Visibility.Hidden;
-            Stop();
+            Restart();
         }
 
     }

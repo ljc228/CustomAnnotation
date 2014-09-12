@@ -8,7 +8,8 @@ namespace CustomAnnotation
 {
     public class Log
     {
-        public string sysTime{get; set;}
+        public string mVideoTime{get; set;}
+        public string mVideoTimeShort { get; set; }
         string mTime;
         double mLogValue;
         public int mLogIndex;

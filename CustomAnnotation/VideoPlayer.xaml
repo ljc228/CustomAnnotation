@@ -174,7 +174,7 @@
                ToolTipService.InitialShowDelay="500" 
                 ToolTipService.ShowDuration="2000" 
                 ToolTipService.BetweenShowDelay="10000" 
-                ToolTip="Restart this Media:  !! Export Log First !!"
+                ToolTip="Restart Media?"
                HorizontalAlignment="Left" Source="/images/replay.png" Height="256" Margin="395,301,0,0" VerticalAlignment="Top" Width="256" Visibility="Hidden" MouseDown="Replay_MouseDown"/>
     </Grid>
 </UserControl>

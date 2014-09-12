@@ -165,7 +165,7 @@ namespace CustomAnnotation
             }
 
             mPollGamepadTimer.Tick += new EventHandler(GamePadUpdateTick);
-            mPollGamepadTimer.Interval = TimeSpan.FromMilliseconds(100);
+            mPollGamepadTimer.Interval = TimeSpan.FromMilliseconds(10);
             mPollGamepadTimer.Start();
 
             return true;
