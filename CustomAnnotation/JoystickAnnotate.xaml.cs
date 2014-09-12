@@ -27,7 +27,12 @@ namespace CustomAnnotation
         BUTTON1PRESSED,
         BUTTON2PRESSED,
         BUTTON3PRESSED,
-        BUTTON4PRESSED
+        BUTTON4PRESSED,
+
+        BUTTONLTPRESSED,
+        BUTTONLBPRESSED,
+        BUTTONRTPRESSED,
+        BUTTONRBPRESSED
     }
 
     public enum ConnectedState
@@ -49,7 +54,7 @@ namespace CustomAnnotation
         public ButtonState mButtonState { get; set; }
 
         private int mThumbStick { get; set; }
-
+        private bool mCleared = true;
 
         public JoystickAnnotate(Grid placeholder)
         {
@@ -165,7 +170,7 @@ namespace CustomAnnotation
             }
 
             mPollGamepadTimer.Tick += new EventHandler(GamePadUpdateTick);
-            mPollGamepadTimer.Interval = TimeSpan.FromMilliseconds(10);
+            mPollGamepadTimer.Interval = TimeSpan.FromMilliseconds(100);
             mPollGamepadTimer.Start();
 
             return true;
@@ -193,25 +198,60 @@ namespace CustomAnnotation
                     {
                         //Capture Buttons.
                         byte[] buttons = mGamePadState.GetButtons();
-                        for (int i = 0; i < buttons.Length; i++)
+
+                        if (buttons[1] != 0)
                         {
-                            if (buttons[1] != 0)
-                            {
-                                mButtonState = ButtonState.BUTTON1PRESSED;
-                            }
-                            else if (buttons[2] != 0)
-                            {
-                                mButtonState = ButtonState.BUTTON2PRESSED;
-                            }
-                            else if (buttons[3] != 0)
-                            {
-                                mButtonState = ButtonState.BUTTON3PRESSED;
-                            }
-                            else if (buttons[4] != 0)
-                            {
-                                mButtonState = ButtonState.BUTTON4PRESSED;
-                            }
+                            mButtonState = ButtonState.BUTTON1PRESSED;
+                            mCleared = false;
+
                         }
+                        else if (buttons[2] != 0)
+                        {
+                            mButtonState = ButtonState.BUTTON2PRESSED;
+                            mCleared = false;
+
+                        }
+                        else if (buttons[3] != 0)
+                        {
+                            mButtonState = ButtonState.BUTTON3PRESSED;
+                            mCleared = false;
+
+                        }
+                        else if (buttons[4] != 0)
+                        {
+                            mButtonState = ButtonState.BUTTON4PRESSED;
+                            mCleared = false;
+
+                        }
+                        else if (buttons[5] != 0)
+                        {
+                            mButtonState = ButtonState.BUTTONLBPRESSED;
+                            mCleared = false;
+
+                        }
+                        else if (buttons[6] != 0)
+                        {
+                            mButtonState = ButtonState.BUTTONLTPRESSED;
+                            mCleared = false;
+
+                        }
+                        else if (buttons[7] != 0)
+                        {
+                            mButtonState = ButtonState.BUTTONRTPRESSED;
+                            mCleared = false;
+
+                        }
+                        else if (buttons[8] != 0)
+                        {
+                            mButtonState = ButtonState.BUTTONRBPRESSED;
+                            mCleared = false;
+
+                        }
+                        else
+                        { 
+                            mCleared = true;
+                        }
+
                     }
                 }
                 catch(Exception ex)

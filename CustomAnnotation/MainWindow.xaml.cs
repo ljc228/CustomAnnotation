@@ -53,12 +53,12 @@ namespace CustomAnnotation{
 
         DispatcherTimer mTimer;
         System.Timers.Timer mPausableLoggingTimer;
+        DispatcherTimer mJoystickTickTimer;
 
         int debugIndex = 0;
 
         DateTime startTime;
         DateTime mPauseTime;
-        DateTime mResumeTime;
         System.TimeSpan mAccumulatedVoidTime;
 
         LOCALSTATE mLocalState = LOCALSTATE.NONE;
@@ -89,6 +89,11 @@ namespace CustomAnnotation{
             mStartupCheckTimer.Interval = TimeSpan.FromMilliseconds(250);
             mStartupCheckTimer.Tick += new EventHandler(mStartupCheckTimerTick);
             mStartupCheckTimer.Start();
+
+            mJoystickTickTimer = new DispatcherTimer();
+            mJoystickTickTimer.Interval = TimeSpan.FromMilliseconds(10);
+            mJoystickTickTimer.Tick += new EventHandler(JoystickTick);
+            mJoystickTickTimer.Start();
         }
 
         void LogInterval(object sender, EventArgs e)
@@ -110,6 +115,23 @@ namespace CustomAnnotation{
                 debugIndex++;
             
             });
+        }
+
+        void JoystickTick(object sender, EventArgs e)
+        {
+            ButtonState mButtonState = mJoystickAnnotate.GetButtonState();
+
+            if (mButtonState == ButtonState.BUTTONLTPRESSED)
+            {
+                mVideoPlayer.Pause();
+                return;
+            }
+            else if (mButtonState == ButtonState.BUTTONRTPRESSED)
+            {
+                mVideoPlayer.Play();
+                return;
+            } 
+
         }
 
         void TimerTick(object sender, EventArgs e)
@@ -169,11 +191,11 @@ namespace CustomAnnotation{
 
                 mLogging.SetLoggingState(LOGGINGSTATE.LOGGING);
 
-                if (mJoystickAnnotate.GetButtonState() == ButtonState.BUTTON2PRESSED)
-                {
-                    mVideoPlayer.Pause();
-                    return;
-                }
+                //if (mJoystickAnnotate.GetButtonState() == ButtonState.BUTTON2PRESSED)
+                //{
+                //    mVideoPlayer.Pause();
+                //    return;
+                //}
 
                 mLevelChange.State = CHANGESTATE.READY;
                 mLevelChange.UpdateLevels(mLogging.mLogList);
@@ -196,11 +218,11 @@ namespace CustomAnnotation{
                     UserMessage.Content = "Media is Paused...";
                 }
 
-                if (mJoystickAnnotate.GetButtonState() == ButtonState.BUTTON2PRESSED)
-                {
-                    mVideoPlayer.Play();
-                    return;
-                } 
+                //if (mJoystickAnnotate.GetButtonState() == ButtonState.BUTTON2PRESSED)
+                //{
+                //    mVideoPlayer.Play();
+                //    return;
+                //} 
                 
                 if (mLevelChange.State != CHANGESTATE.UPDATED)
                     mLevelChange.UpdateLevels(mLogging.mLogList);
